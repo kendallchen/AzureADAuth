@@ -1,0 +1,26 @@
+﻿@page "{customerId:int}"
+@model WebApp.Pages.Customer.DeleteModel
+@{
+    ViewData["Title"] = "Delete Customer";
+}
+
+<div class="alert alert-info">
+    Are you sure you want to delete @Model.Customer.FirstName @Model.Customer.LastName? 
+</div>
+<div>
+    Customer ID: @Model.Customer.CustomerId
+</div>
+<div>
+    First Name: @Model.Customer.FirstName
+</div>
+<div>
+    Last Name: @Model.Customer.LastName
+</div>
+
+<div class="mt-3">
+    <form method="post">
+        <input type="hidden" asp-for="Customer.CustomerId" />
+        <button type="submit" class="btn btn-primary">Delete</button>
+        <a class="btn btn-secondary" asp-page="./List">Cancel</a>
+    </form>
+</div>

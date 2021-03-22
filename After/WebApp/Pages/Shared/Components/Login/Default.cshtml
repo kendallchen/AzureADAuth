@@ -1,0 +1,17 @@
+﻿@model WebApp.ViewComponents.LoginModel
+
+@if (Model.IsLoggedIn)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark">@Model.UserName</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-page="/Logout">Logout</a>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-page="/Customer/List">Login</a>
+    </li>
+}

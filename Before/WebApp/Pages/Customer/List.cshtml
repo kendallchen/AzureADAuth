@@ -1,0 +1,130 @@
+﻿@page
+@model WebApp.Pages.Customer.ListModel
+@{
+    ViewData["Title"] = "DotNetLead - Customers";
+}
+
+<div>
+    <h5>Manage Customers</h5>
+</div>
+
+<div>
+    <div>
+        <table class="table table-bordered table-hover table-sm w-auto">
+            <caption>Items @Model.PageSortResult.FirstRowOnPage to @Model.PageSortResult.LastRowOnPage</caption>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">
+                        <a asp-page="./Edit" asp-route-customerId="0">
+                            <i class="material-icons icon">add_box</i>
+                        </a>
+                    </th>
+                    <th scope="colgroup" colspan="4" class="text-right">
+                        <form method="get">
+                            Page Size:
+                            @Html.DropDownListFor(m => m.PageSize, Model.PageSizeList, "-Select-", new { onchange = "submit()" })
+                            <input type="hidden" name="PageNumber" value="1" /> 
+                            <input type="hidden" name="SortField" value="@Model.SortField" />
+                            <input type="hidden" name="SortDir" value="@Model.SortDir" />
+                        </form>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="pl-2 pr-2">
+                        <a asp-page="./List"
+                           asp-route-SortField="CustomerId"
+                           asp-route-SortDir="@Model.SortDir"
+                           asp-route-SortDirNext="@Model.SortDirNext"
+                           asp-route-PageSize="@Model.PageSize"
+                           asp-route-PageNumber="@Model.PageNumber">
+                            Customer ID
+                        </a>
+                    </th>
+                    <th scope="col" class="pl-2 pr-2">
+                        <a asp-page="./List"
+                           asp-route-SortField="FirstName"
+                           asp-route-SortDir="@Model.SortDir"
+                           asp-route-SortDirNext="@Model.SortDirNext"
+                           asp-route-PageSize="@Model.PageSize"
+                           asp-route-PageNumber="@Model.PageNumber">
+                            First Name
+                        </a>
+                    </th>
+                    <th scope="col" class="pl-2 pr-2">
+                        <a asp-page="./List"
+                           asp-route-SortField="LastName"
+                           asp-route-SortDir="@Model.SortDir"
+                           asp-route-SortDirNext="@Model.SortDirNext"
+                           asp-route-PageSize="@Model.PageSize"
+                           asp-route-PageNumber="@Model.PageNumber">
+                            Last Name
+                        </a>
+                    </th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.CustomerList)
+                {
+                    <tr>
+                        <td class="pl-2 pr-2">@c.CustomerId</td>
+                        <td class="pl-2 pr-2">@c.FirstName</td>
+                        <td class="pl-2 pr-2">@c.LastName</td>
+                        <td class="td-center pl-2 pr-2">
+                            <a asp-page="./Edit" asp-route-customerId="@c.CustomerId">
+                                <i class="material-icons icon">edit</i>
+                            </a>
+                        </td>
+                        <td class="td-center pl-2 pr-2">
+                            <a asp-page="./Delete" asp-route-customerId="@c.CustomerId">
+                                <i class="material-icons icon">delete</i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    @{
+        var prev = Model.PageSortResult.PreviousPage.HasValue ? "" : "disabled";
+        var next = Model.PageSortResult.NextPage.HasValue ? "" : "disabled";
+        var first = Model.PageNumber != 1 ? "" : "disabled";
+        var last = Model.PageNumber != Model.PageSortResult.TotalPages ? "" : "disabled";
+    }
+</div>
+<a asp-page="./List"
+   asp-route-pageNumber="1"
+   asp-route-PageSize="@Model.PageSize"
+   asp-route-SortField="@Model.SortField"
+   asp-route-SortDir="@Model.SortDir"
+   class="btn @first">
+    <i class="material-icons icon">first_page</i>
+</a>
+<a asp-page="./List"
+   asp-route-pageNumber="@Model.PageSortResult.PreviousPage" 
+   asp-route-PageSize="@Model.PageSize"
+   asp-route-SortField="@Model.SortField"
+   asp-route-SortDir="@Model.SortDir"
+   class="btn @prev">
+    <i class="material-icons icon">chevron_left</i>
+</a>
+Page @Model.PageNumber of @Model.PageSortResult.TotalPages
+<a asp-page="./List"
+   asp-route-pageNumber="@Model.PageSortResult.NextPage"
+   asp-route-PageSize="@Model.PageSize"
+   asp-route-SortField="@Model.SortField"
+   asp-route-SortDir="@Model.SortDir"
+   class="btn @next">
+    <i class="material-icons icon">chevron_right</i>
+</a>
+<a asp-page="./List"
+   asp-route-pageNumber="@Model.PageSortResult.TotalPages"
+   asp-route-PageSize="@Model.PageSize"
+   asp-route-SortField="@Model.SortField"
+   asp-route-SortDir="@Model.SortDir"
+   class="btn @last">
+    <i class="material-icons icon">last_page</i>
+</a>

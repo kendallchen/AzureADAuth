@@ -1,0 +1,34 @@
+﻿@page "{customerId:int}"
+@model WebApp.Pages.Customer.EditModel
+@{
+    ViewData["Title"] = "Edit Customer";
+}
+
+<h5>@Model.Action Customer @Model.Customer.FirstName @Model.Customer.LastName </h5>
+
+<form method="post">
+    <input type="hidden" asp-for="Customer.CustomerId" />
+    @if (Model.Action == "Edit")
+    {
+        <div>
+            Customer ID: @Model.Customer.CustomerId
+        </div>
+    }
+    
+    <div class="form-group">
+        <label asp-for="Customer.FirstName">First Name</label>
+        <input asp-for="Customer.FirstName" class="form-control w-25" />
+        <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.LastName">Last Name</label>
+        <input asp-for="Customer.LastName" class="form-control w-25" />
+        <span asp-validation-for="Customer.LastName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a class="btn btn-secondary" asp-page="./List">Cancel</a>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
